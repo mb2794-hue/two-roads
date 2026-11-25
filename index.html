@@ -1,1 +1,1286 @@
-this project is coming soon
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covenant & Liberty: From Sinai to Independence</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cinzel for regal historical headings, Lora for parchment body, Inter for UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Cinzel', 'serif'],
+                        serif: ['Lora', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        parchment: {
+                            50: '#fdfbf7',
+                            100: '#f8f2e4',
+                            200: '#efe2c6',
+                            300: '#e2cba0',
+                            800: '#4a3b2c',
+                            900: '#2d2318',
+                        },
+                        indigoRoyal: {
+                            800: '#1e2b4d',
+                            900: '#131c36',
+                            950: '#0b1122',
+                        },
+                        crimsonSeal: {
+                            600: '#9b2226',
+                            700: '#7f1d1d',
+                            800: '#5e1313',
+                        },
+                        goldLeaf: {
+                            400: '#eab308',
+                            500: '#ca8a04',
+                            600: '#a16207',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom aesthetic styling & tactile parchment animations */
+        body {
+            background-color: #0b1122;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(202, 138, 4, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(155, 34, 38, 0.14) 0%, transparent 45%);
+            color: #2d2318;
+            overflow-x: hidden;
+        }
+
+        .parchment-card {
+            background-color: #f8f2e4;
+            background-image: linear-gradient(to bottom right, rgba(255,255,255,0.65), rgba(226,203,160,0.35));
+            box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(161, 98, 7, 0.35);
+        }
+
+        .parchment-inner {
+            background-color: #fdfbf7;
+            border: 1px solid #d6bc8b;
+        }
+
+        .gold-border-double {
+            border: 3px double #ca8a04;
+        }
+
+        .btn-wax {
+            background: linear-gradient(135deg, #9b2226 0%, #6b1417 100%);
+            box-shadow: 0 4px 12px rgba(155, 34, 38, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-wax:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(155, 34, 38, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        }
+
+        .btn-wax:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+            box-shadow: 0 4px 12px rgba(202, 138, 4, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-gold:hover:not(:disabled) {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-enter {
+            animation: fadeSlideUp 0.4s ease-out forwards;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(202, 138, 4, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(202, 138, 4, 0); }
+        }
+
+        .selected-card {
+            border-color: #ca8a04 !important;
+            background-color: #fef9c3 !important;
+            animation: pulseGlow 1.8s infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131c36;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a16207;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-goldLeaf-400 selection:text-indigoRoyal-950">
+
+    <!-- Top Navigation & Status Bar -->
+    <header class="sticky top-0 z-40 bg-indigoRoyal-950/95 backdrop-blur-md border-b border-goldLeaf-600/40 text-parchment-100 px-4 py-3 shadow-lg">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <!-- Brand / Emblem -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-goldLeaf-400 to-goldLeaf-600 flex items-center justify-center text-indigoRoyal-950 shadow-inner shrink-0">
+                    <!-- Custom Torch & Tablet SVG Icon -->
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 4h5v16H6a2 2 0 01-2-2V6a2 2 0 012-2z" />
+                        <path d="M13 4h5a2 2 0 012 2v12a2 2 0 01-2 2h-5V4z" />
+                        <path d="M12 2v20" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-display text-base sm:text-lg font-bold tracking-wider text-goldLeaf-400 leading-tight">
+                        COVENANT & LIBERTY
+                    </h1>
+                    <p class="text-[11px] sm:text-xs text-parchment-300 font-serif italic">
+                        Yetziat Mitzrayim & The American Revolution
+                    </p>
+                </div>
+            </div>
+
+            <!-- Meters & Controls -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                <!-- Wisdom & Liberty Meters -->
+                <div id="hud-meters" class="hidden sm:flex items-center gap-3 bg-indigoRoyal-900/90 px-3 py-1.5 rounded-xl border border-goldLeaf-600/30 text-xs">
+                    <div class="flex items-center gap-1.5" title="Chochmah (Historical & Torah Wisdom)">
+                        <span class="text-goldLeaf-400 font-bold">📜 Chochmah:</span>
+                        <span id="stat-chochmah" class="font-mono font-bold text-white">0</span>
+                    </div>
+                    <span class="text-goldLeaf-600/50">|</span>
+                    <div class="flex items-center gap-1.5" title="Cheirut (Covenantal Liberty)">
+                        <span class="text-amber-300 font-bold">🔔 Cheirut:</span>
+                        <span id="stat-cheirut" class="font-mono font-bold text-white">0</span>
+                    </div>
+                </div>
+
+                <!-- Chavruta Codex Button -->
+                <button onclick="toggleCodex()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-indigoRoyal-800 hover:bg-indigoRoyal-700 border border-goldLeaf-500/50 text-parchment-100 text-xs sm:text-sm font-medium transition cursor-pointer shadow">
+                    <span>📖</span>
+                    <span>Chavruta Codex</span>
+                </button>
+
+                <!-- Sound Toggle Button -->
+                <button id="sound-toggle" onclick="toggleSound()" aria-label="Toggle Sound" class="p-2 rounded-xl bg-indigoRoyal-800 hover:bg-indigoRoyal-700 border border-goldLeaf-500/50 text-goldLeaf-400 transition cursor-pointer" title="Toggle Audio Effects">
+                    <span id="sound-icon">🔊</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Act Progress Bar -->
+        <div id="progress-container" class="max-w-6xl mx-auto mt-3 pt-2 border-t border-indigoRoyal-800 hidden">
+            <div class="flex items-center justify-between text-xs text-parchment-300 mb-1.5 font-medium">
+                <span id="step-label-1" class="text-goldLeaf-400 font-semibold">Act I: The Parallel Matchmaker</span>
+                <span id="step-label-2" class="opacity-60">Act II: Council of Elders & Founders</span>
+                <span id="step-label-3" class="opacity-60">Act III: The Great Seal & Liberty Bell</span>
+            </div>
+            <div class="w-full h-2 bg-indigoRoyal-900 rounded-full overflow-hidden p-0.5 border border-goldLeaf-600/30">
+                <div id="overall-progress-bar" class="h-full bg-gradient-to-r from-goldLeaf-500 via-amber-400 to-crimsonSeal-600 rounded-full transition-all duration-500" style="width: 10%"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Game Container -->
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div id="game-stage" class="w-full max-w-5xl">
+            <!-- Dynamic Content Rendered Here -->
+        </div>
+    </main>
+
+    <!-- Chavruta Codex Modal / Drawer -->
+    <div id="codex-modal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="parchment-card w-full max-w-3xl max-h-[85vh] rounded-2xl flex flex-col overflow-hidden border-2 border-goldLeaf-600 animate-enter">
+            <!-- Modal Header -->
+            <div class="bg-indigoRoyal-950 text-parchment-100 px-6 py-4 flex items-center justify-between border-b border-goldLeaf-500">
+                <div>
+                    <h2 class="font-display text-xl font-bold text-goldLeaf-400">📖 The Chavruta Codex</h2>
+                    <p class="text-xs text-parchment-300 font-serif">Sacred Concepts & Revolutionary Parallels Reference Guide</p>
+                </div>
+                <button onclick="toggleCodex()" class="p-2 rounded-lg bg-indigoRoyal-800 hover:bg-crimsonSeal-700 text-white transition cursor-pointer font-bold">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto space-y-4 font-serif text-parchment-900">
+                <div class="p-4 rounded-xl bg-amber-50/90 border border-amber-300 text-sm">
+                    <strong class="font-display text-indigoRoyal-900 block mb-1">Historical Note: The Hebrew Bible & The American Founding</strong>
+                    In August 1776, the Continental Congress tasked Benjamin Franklin, Thomas Jefferson, and John Adams with designing a Great Seal for the new nation. Both Franklin and Jefferson proposed scenes from <em>Yetziat Mitzrayim</em>—depicting Moses leading the Israelites through the parted Red Sea while Pharaoh's chariots perished, inscribed with the motto: <em>"Rebellion to Tyrants is Obedience to God."</em>
+                </div>
+
+                <div id="codex-entries" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Populated dynamically from game data -->
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-parchment-200 px-6 py-3 border-t border-parchment-300 flex justify-end">
+                <button onclick="toggleCodex()" class="btn-wax text-white px-5 py-2 rounded-xl text-sm font-semibold cursor-pointer">
+                    Return to Scroll
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Notification Toast (Replaces alert()) -->
+    <div id="toast-box" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-indigoRoyal-950 text-parchment-50 border-2 border-goldLeaf-500 px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 max-w-sm">
+            <span id="toast-icon" class="text-xl">✨</span>
+            <p id="toast-message" class="text-sm font-medium"></p>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. WEB AUDIO API SOUND ENGINE (No external URLs)
+        // ==========================================
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) audioCtx = new AudioContext();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playTone(freq, type = 'sine', duration = 0.25, gainVal = 0.08, delay = 0) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + delay);
+                
+                gain.gain.setValueAtTime(0.001, audioCtx.currentTime + delay);
+                gain.gain.exponentialRampToValueAtTime(gainVal, audioCtx.currentTime + delay + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + delay + duration);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(audioCtx.currentTime + delay);
+                osc.stop(audioCtx.currentTime + delay + duration);
+            } catch (e) {
+                // Gracefully ignore audio errors on restricted devices
+            }
+        }
+
+        const sfx = {
+            click: () => playTone(520, 'triangle', 0.1, 0.06),
+            match: () => {
+                playTone(523.25, 'sine', 0.25, 0.08, 0);     // C5
+                playTone(659.25, 'sine', 0.25, 0.08, 0.08);  // E5
+                playTone(783.99, 'sine', 0.35, 0.09, 0.16);  // G5
+            },
+            error: () => {
+                playTone(220, 'sawtooth', 0.18, 0.05, 0);
+                playTone(196, 'sawtooth', 0.22, 0.05, 0.1);
+            },
+            libertyBell: () => {
+                // Resonant E-flat major bell chord
+                playTone(311.13, 'sine', 1.2, 0.09, 0);
+                playTone(392.00, 'triangle', 1.1, 0.06, 0.04);
+                playTone(466.16, 'sine', 1.3, 0.07, 0.08);
+                playTone(622.25, 'sine', 1.4, 0.05, 0.12);
+            }
+        };
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
+            showToast(soundEnabled ? 'Sound effects enabled' : 'Sound effects muted', soundEnabled ? '🔔' : '🔇');
+        }
+
+        // ==========================================
+        // 2. GAME DATA & AUTHENTIC SOURCES
+        // ==========================================
+        const PARALLEL_PAIRS = [
+            {
+                id: 'oppression',
+                exodusTitle: "Pharaoh's Oppression & Avodah Kashah",
+                exodusSub: "Bricks without straw; crushing human spirit (Shemot 1:14)",
+                exodusIcon: "🧱",
+                revTitle: "King George III & Tyranny of Taxation",
+                revSub: "Taxation without representation & Quartering Acts (1765–1775)",
+                revIcon: "👑",
+                hebrewTerm: "Tzelem Elokim (צֶלֶם אֱלֹקִים)",
+                conceptTitle: "Divine Image & Rejection of Absolute Human Kingship",
+                insight: "In Judaism, every human being is created in Tzelem Elokim (the Image of God). Pharaoh claimed to be a deity who owned his subjects' bodies and souls. Similarly, Thomas Paine's 'Common Sense' (1776) cited 1 Samuel 8 to argue that absolute monarchy is an affront to God's sovereignty—'in America THE LAW IS KING.'"
+            },
+            {
+                id: 'leadership',
+                exodusTitle: "Moshe Rabbeinu & The Staff of God",
+                exodusSub: "Reluctant shepherd who attributes every triumph to Hashem",
+                exodusIcon: "🪄",
+                revTitle: "George Washington & 'Divine Providence'",
+                revSub: "Humble commander who relinquished power & credited Providence",
+                revIcon: "🎖️",
+                hebrewTerm: "Hashgachah Pratit (הַשְׁגָּחָה פְּרָטִית)",
+                conceptTitle: "Humility in Leadership & Divine Providence",
+                insight: "Moses is described as the humblest person on earth (Bamidbar 12:3), holding up his staff not to claim personal glory, but to direct Israel's eyes Heavenward. Early Americans frequently referred to George Washington as the 'American Moses' for his humility, reliance on 'Divine Providence,' and willingness to surrender military power."
+            },
+            {
+                id: 'crossing',
+                exodusTitle: "Splitting of Yam Suf (The Red Sea)",
+                exodusSub: "Nachshon ben Aminadav steps into the waves before they part",
+                exodusIcon: "🌊",
+                revTitle: "Crossing the Delaware & Valley Forge",
+                revSub: "Daring winter crossing against impossible military odds (1776)",
+                revIcon: "⛵",
+                hebrewTerm: "Mesirut Nefesh (מְסִירוּת נֶפֶשׁ)",
+                conceptTitle: "Courageous Faith & Self-Sacrifice (Nachshon)",
+                insight: "According to the Talmud (Sotah 37a), the Red Sea did not split until Nachshon ben Aminadav walked into the water up to his nostrils. Freedom requires human initiative partnered with faith. Similarly, Washington's perilous Christmas night crossing of the icy Delaware River turned the tide when the Continental Army was on the brink of collapse."
+            },
+            {
+                id: 'haste',
+                exodusTitle: "Matzah — The Bread of Haste",
+                exodusSub: "Dough baked before it could rise when redemption called (Shemot 12:39)",
+                exodusIcon: "🫓",
+                revTitle: "The Minutemen & Citizen Militias",
+                revSub: "Farmers ready to leave their plows at a minute's warning",
+                revIcon: "⏳",
+                hebrewTerm: "Chipazon (חִפָּזוֹן)",
+                conceptTitle: "Spiritual Urgency & Seizing the Moment",
+                insight: "The Torah emphasizes that Israel left Egypt in 'Chipazon' (haste)—there was no time to wait for bread to leaven. Rabbi Jonathan Sacks teaches that freedom belongs to those prepared to act swiftly when history knocks. The Colonial Minutemen embodied this readiness, leaving unfinished fields at Lexington and Concord to defend liberty."
+            },
+            {
+                id: 'covenant',
+                exodusTitle: "Har Sinai & Matan Torah",
+                exodusSub: "True freedom is found in accepting moral law (Pirkei Avot 6:2)",
+                exodusIcon: "📜",
+                revTitle: "Declaration of Independence & U.S. Constitution",
+                revSub: "Self-governance bound by unalienable rights and constitutional law",
+                revIcon: "🖋️",
+                hebrewTerm: "Brit (בְּרִית) & Cheirut (חֵרוּת)",
+                conceptTitle: "Covenantal Freedom: Liberty Under Law",
+                insight: "Pirkei Avot (6:2) reads 'Charut al HaLuchot' (engraved on the Tablets) as 'Cheirut' (freedom)—teaching that no one is truly free except one who lives by moral law. Without Sinai, leaving Egypt would have led to chaos. Likewise, the Declaration of Independence and Constitution transformed rebellion into a lasting 'Brit' (covenant) of ordered liberty."
+            },
+            {
+                id: 'libertybell',
+                exodusTitle: "Yovel (The Jubilee Year) — Vayikra 25:10",
+                exodusSub: "'Proclaim liberty throughout the land unto all the inhabitants thereof'",
+                exodusIcon: "📯",
+                revTitle: "The Liberty Bell in Philadelphia",
+                revSub: "Cast in 1751 bearing the exact verse from Leviticus 25:10",
+                revIcon: "🔔",
+                hebrewTerm: "Dror (דְּרוֹר)",
+                conceptTitle: "Universal Liberty & Inherent Dignity",
+                insight: "In 1751, Speaker Isaac Norris ordered the inscription from Leviticus 25:10 ('U'kratem Dror Ba'aretz...') cast around the crown of the Pennsylvania State House Bell—now known as the Liberty Bell. The Hebrew word 'Dror' means free-flowing liberty, symbolizing that freedom is a God-given birthright, not a favor granted by kings."
+            }
+        ];
+
+        const SCENARIOS = [
+            {
+                id: 1,
+                eraBadge: "Dilemma I: The Wilderness & Valley Forge",
+                title: "The Crisis of Hardship & Nostalgia for Egypt",
+                exodusParallel: "In the desert (Shemot 16:3), facing hunger and uncertainty, some Israelites cried: 'If only we had died in Egypt where we sat by pots of meat!'",
+                revParallel: "During the freezing winter of 1777–78 at Valley Forge, starving Continental soldiers lacked boots and coats, and many considered deserting back to British rule.",
+                question: "As an Elder of Israel and a Delegate to the Continental Congress, how do you rally a weary people tempted to trade liberty for the comfort of servitude?",
+                options: [
+                    {
+                        text: "Return to Pharaoh / King George: 'Safety and full stomachs under a master are better than risking everything in the wilderness.'",
+                        chochmah: 5,
+                        cheirut: 0,
+                        badge: "Avdut (Servitude Mentality)",
+                        feedback: "Slavery offers predictable rations at the price of human dignity. Both the Torah and Thomas Paine warned that those who surrender liberty for temporary comfort end up losing both."
+                    },
+                    {
+                        text: "Invoke Emunah & Purpose: 'True dignity cannot exist in chains. Endure this trial together, share our provisions, and trust that Providence leads us toward a promised covenant.'",
+                        chochmah: 25,
+                        cheirut: 25,
+                        badge: "Emunah & Chesed (Faith & Solidarity)",
+                        feedback: "Spot on! In Pirkei Avot (2:4), Hillel teaches: 'Do not separate yourself from the community.' Both the sharing of Manna in the desert and mutual aid at Valley Forge forged a unified nation."
+                    },
+                    {
+                        text: "Every Person for Themselves: 'Hoard whatever food and supplies you can find; survival is an individual battle.'",
+                        chochmah: 10,
+                        cheirut: 5,
+                        badge: "Individualism Without Covenant",
+                        feedback: "When Israelites tried to hoard Manna overnight (Shemot 16:20), it spoiled. Liberty requires mutual responsibility ('Kol Yisrael Arevim Zeh BaZeh' — all people are responsible for one another)."
+                    }
+                ]
+            },
+            {
+                id: 2,
+                eraBadge: "Dilemma II: At the Edge of the Sea & The Delaware",
+                title: "Paralyzed by Impossible Odds",
+                exodusParallel: "Trapped between Pharaoh's advancing chariots and the roaring Yam Suf (Red Sea), the people argued whether to surrender, despair, or leap forward.",
+                revParallel: "In December 1776, pushed across New Jersey with a dwindling army, the Revolution stood days away from total defeat.",
+                question: "The waters have not yet parted, and the ice on the river is thick. What principle guides your decisive action?",
+                options: [
+                    {
+                        text: "Wait Passively for a Miracle: 'Do not move an inch until Heaven solves the crisis completely without our effort.'",
+                        chochmah: 10,
+                        cheirut: 10,
+                        badge: "Passivity",
+                        feedback: "In Shemot 14:15, God tells Moses: 'Why do you cry out to Me? Speak to the Children of Israel and let them go forward!' Miracles meet human courage halfway."
+                    },
+                    {
+                        text: "Act with Nachshon's Courage: 'Step forward into the waters with faith and bold strategy—Heaven's help follows human initiative.'",
+                        chochmah: 25,
+                        cheirut: 25,
+                        badge: "Gevurah & Bitachon (Courageous Trust)",
+                        feedback: "Brilliant! Just as Nachshon ben Aminadav stepped into the sea before it split, Washington crossed the icy Delaware on Christmas night—turning despair into victory at Trenton."
+                    },
+                    {
+                        text: "Surrender to Preserve Property: 'Lay down our arms and hope the empire grants mercy.'",
+                        chochmah: 5,
+                        cheirut: 0,
+                        badge: "Capitulation",
+                        feedback: "Tyranny rarely rewards submission with genuine liberty. As Patrick Henry declared, true liberty requires the courage to stand firm."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                eraBadge: "Dilemma III: Sinai & The Constitutional Convention",
+                title: "Defining True Freedom After Victory",
+                exodusParallel: "Seven weeks after leaving Egypt, Israel arrived at Har Sinai. Without shared laws and moral duties, freed slaves risk descending into chaos.",
+                revParallel: "After winning independence in 1783, the fledgling United States struggled under weak governance (Shays' Rebellion), needing a Constitution to secure 'the Blessings of Liberty.'",
+                question: "Now that the tyrant is defeated, what is the true definition of 'Cheirut' (Liberty)?",
+                options: [
+                    {
+                        text: "Absolute Anarchy: 'Freedom means no laws, no taxes, and every individual doing whatever pleases their own eyes.'",
+                        chochmah: 5,
+                        cheirut: 5,
+                        badge: "Hefkerut (Lawlessness)",
+                        feedback: "The Book of Judges warns that when 'everyone does what is right in their own eyes,' the strong oppress the weak. Lawlessness is not liberty—it is a new form of tyranny."
+                    },
+                    {
+                        text: "Covenantal Liberty (Brit): 'Freedom is self-government under a moral constitution—protecting unalienable rights through shared duty and justice.'",
+                        chochmah: 25,
+                        cheirut: 25,
+                        badge: "Cheirut al HaLuchot (Liberty Under Law)",
+                        feedback: "Masterful! Pirkei Avot 6:2 teaches that true freedom is 'engraved on the Tablets' of moral law. Both the Torah at Sinai and the U.S. Constitution anchor freedom in covenantal justice."
+                    },
+                    {
+                        text: "Crown a New Absolute Monarch: 'Make our victorious general an absolute king for life so we never have to debate again.'",
+                        chochmah: 10,
+                        cheirut: 5,
+                        badge: "Returning to Monarchy",
+                        feedback: "Just as Gideon refused hereditary kingship in Judges 8:23 ('Hashem shall rule over you'), George Washington famously declined the idea of monarchy and stepped down after two terms."
+                    }
+                ]
+            }
+        ];
+
+        const SEAL_QUIZ = [
+            {
+                prompt: "In August 1776, what scene did Benjamin Franklin & Thomas Jefferson propose for the Great Seal of the United States?",
+                choices: [
+                    "An eagle holding olive branches and arrows",
+                    "Moses parting the Red Sea with the Pillar of Fire, and Pharaoh's chariots overwhelmed",
+                    "The Boston Tea Party in Boston Harbor"
+                ],
+                correct: 1,
+                explanation: "Both Franklin and Jefferson proposed depicting Moses leading Israel across the Red Sea under the Pillar of Fire, paired with the motto: 'Rebellion to Tyrants is Obedience to God.'"
+            },
+            {
+                prompt: "Which Hebrew concept engraved on the Liberty Bell (from Leviticus 25:10) means 'free-flowing universal liberty'?",
+                choices: [
+                    "Dror (דְּרוֹר) — 'Proclaim liberty throughout all the land'",
+                    "Avdut (עַבְדוּת) — Bondage",
+                    "Manna (מָן) — Bread from Heaven"
+                ],
+                correct: 0,
+                explanation: "'U'kratem Dror Ba'aretz' (Leviticus 25:10) was cast onto the Liberty Bell in 1751, rooting American liberty in the Biblical Jubilee ideal."
+            },
+            {
+                prompt: "According to Pirkei Avot 6:2, how does Jewish tradition connect 'Charut' (engraved on the Tablets at Sinai) with 'Cheirut' (Freedom)?",
+                choices: [
+                    "Freedom means having zero obligations to others",
+                    "True freedom is found through moral law and self-restraint, not lawlessness",
+                    "Only kings can experience true freedom"
+                ],
+                correct: 1,
+                explanation: "Freedom without moral law collapses into chaos. Covenantal liberty binds power to justice and human dignity."
+            }
+        ];
+
+        const CODEX_ITEMS = [
+            { term: "Yetziat Mitzrayim (יְצִיאַת מִצְרַיִם)", def: "The Exodus from Egypt—the foundational Biblical narrative of liberation from tyranny to covenantal nationhood." },
+            { term: "Cheirut (חֵרוּת) vs. Chofesh (חֹפֶשׁ)", def: "'Chofesh' is mere absence of restraint; 'Cheirut' (Pirkei Avot 6:2) is dignified, purposeful freedom grounded in moral law." },
+            { term: "Brit (בְּרִית — Covenant)", def: "A sacred mutual pledge binding people to God and to one another in shared moral responsibility—the ancestor of constitutionalism." },
+            { term: "Dror (דְּרוֹר — Leviticus 25:10)", def: "Universal liberty proclaimed in the Jubilee year; inscribed directly on the Liberty Bell in Philadelphia." },
+            { term: "Nachshon ben Aminadav", def: "The leader of Judah who walked into the Red Sea before it split, modeling courageous faith ('Mesirut Nefesh')." },
+            { term: "1776 Great Seal Proposal", def: "Franklin & Jefferson's design featuring Moses, the Pillar of Fire, and the motto 'Rebellion to Tyrants is Obedience to God.'" }
+        ];
+
+        // ==========================================
+        // 3. GAME STATE
+        // ==========================================
+        let gameState = {
+            screen: 'intro', // 'intro' | 'act1' | 'act2' | 'act3' | 'victory'
+            chochmah: 0,
+            cheirut: 0,
+            // Act 1 State
+            selectedExodus: null,
+            selectedRev: null,
+            matchedIds: [],
+            activeInsight: null,
+            shuffledExodus: [],
+            shuffledRev: [],
+            // Act 2 State
+            scenarioIndex: 0,
+            scenarioChoiceMade: null,
+            // Act 3 State
+            sealElements: {
+                moses: false,
+                pillar: false,
+                motto: false
+            },
+            quizIndex: 0,
+            quizAnswered: null
+        };
+
+        // ==========================================
+        // 4. HELPER FUNCTIONS
+        // ==========================================
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function updateMeters(addChochmah = 0, addCheirut = 0) {
+            gameState.chochmah += addChochmah;
+            gameState.cheirut += addCheirut;
+            document.getElementById('stat-chochmah').textContent = gameState.chochmah;
+            document.getElementById('stat-cheirut').textContent = gameState.cheirut;
+        }
+
+        function showToast(msg, icon = '✨') {
+            const box = document.getElementById('toast-box');
+            document.getElementById('toast-message').textContent = msg;
+            document.getElementById('toast-icon').textContent = icon;
+            box.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                box.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        function toggleCodex() {
+            sfx.click();
+            const modal = document.getElementById('codex-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function populateCodex() {
+            const container = document.getElementById('codex-entries');
+            container.innerHTML = CODEX_ITEMS.map(item => `
+                <div class="parchment-inner p-4 rounded-xl shadow-sm">
+                    <h3 class="font-display font-bold text-indigoRoyal-900 text-sm mb-1">${item.term}</h3>
+                    <p class="text-xs text-parchment-800 leading-relaxed">${item.def}</p>
+                </div>
+            `).join('');
+        }
+
+        function updateProgressUI() {
+            const progContainer = document.getElementById('progress-container');
+            const hudMeters = document.getElementById('hud-meters');
+            const bar = document.getElementById('overall-progress-bar');
+            const l1 = document.getElementById('step-label-1');
+            const l2 = document.getElementById('step-label-2');
+            const l3 = document.getElementById('step-label-3');
+
+            if (gameState.screen === 'intro') {
+                progContainer.classList.add('hidden');
+                hudMeters.classList.add('hidden');
+                return;
+            }
+
+            progContainer.classList.remove('hidden');
+            hudMeters.classList.remove('hidden');
+
+            [l1, l2, l3].forEach(el => {
+                el.classList.remove('text-goldLeaf-400', 'font-semibold');
+                el.classList.add('opacity-60');
+            });
+
+            if (gameState.screen === 'act1') {
+                l1.classList.add('text-goldLeaf-400', 'font-semibold');
+                l1.classList.remove('opacity-60');
+                const pct = 10 + (gameState.matchedIds.length / PARALLEL_PAIRS.length) * 25;
+                bar.style.width = `${pct}%`;
+            } else if (gameState.screen === 'act2') {
+                l2.classList.add('text-goldLeaf-400', 'font-semibold');
+                l2.classList.remove('opacity-60');
+                const pct = 38 + (gameState.scenarioIndex / SCENARIOS.length) * 30;
+                bar.style.width = `${pct}%`;
+            } else if (gameState.screen === 'act3') {
+                l3.classList.add('text-goldLeaf-400', 'font-semibold');
+                l3.classList.remove('opacity-60');
+                const pct = 70 + (gameState.quizIndex / SEAL_QUIZ.length) * 28;
+                bar.style.width = `${pct}%`;
+            } else if (gameState.screen === 'victory') {
+                [l1, l2, l3].forEach(el => el.classList.remove('opacity-60'));
+                bar.style.width = '100%';
+            }
+        }
+
+        // ==========================================
+        // 5. SCREEN RENDERERS
+        // ==========================================
+        function startGame() {
+            sfx.libertyBell();
+            gameState = {
+                screen: 'act1',
+                chochmah: 10,
+                cheirut: 10,
+                selectedExodus: null,
+                selectedRev: null,
+                matchedIds: [],
+                activeInsight: null,
+                shuffledExodus: shuffleArray(PARALLEL_PAIRS),
+                shuffledRev: shuffleArray(PARALLEL_PAIRS),
+                scenarioIndex: 0,
+                scenarioChoiceMade: null,
+                sealElements: { moses: false, pillar: false, motto: false },
+                quizIndex: 0,
+                quizAnswered: null
+            };
+            updateMeters(0, 0);
+            render();
+        }
+
+        function renderIntro() {
+            return `
+                <div class="parchment-card rounded-3xl p-6 sm:p-10 md:p-12 gold-border-double animate-enter text-center relative overflow-hidden">
+                    <!-- Decorative Top Emblem -->
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigoRoyal-950 text-goldLeaf-400 text-xs font-display tracking-widest uppercase mb-6 shadow">
+                        <span>✡️</span>
+                        <span>An Interactive Journey Through Covenant & History</span>
+                        <span>🦅</span>
+                    </div>
+
+                    <h1 class="font-display text-3xl sm:text-5xl font-extrabold text-indigoRoyal-950 tracking-tight mb-4 leading-tight">
+                        From Sinai to Independence
+                    </h1>
+                    <p class="font-serif italic text-lg sm:text-xl text-crimsonSeal-700 max-w-2xl mx-auto mb-6">
+                        "Proclaim liberty throughout all the land unto all the inhabitants thereof." — Leviticus 25:10
+                    </p>
+
+                    <div class="parchment-inner rounded-2xl p-5 sm:p-6 text-left max-w-3xl mx-auto mb-8 space-y-4 font-serif text-parchment-900 text-sm sm:text-base leading-relaxed shadow-inner">
+                        <p>
+                            When the American Founders sought a blueprint for throwing off tyranny and building a self-governing republic, they turned directly to the Hebrew Bible and the story of <strong>Yetziat Mitzrayim</strong> (the Exodus from Egypt).
+                        </p>
+                        <p>
+                            From the <strong>Liberty Bell</strong> bearing the Biblical verse of Jubilee (<em>Dror</em>), to Benjamin Franklin and Thomas Jefferson proposing a <strong>Great Seal</strong> depicting Moses parting the Red Sea, the American Revolution drew deeply from Jewish concepts of <strong>Tzelem Elokim</strong> (human dignity), <strong>Brit</strong> (covenant), and <strong>Cheirut</strong> (liberty bound by moral law).
+                        </p>
+                    </div>
+
+                    <!-- Three Acts Preview Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8 text-left">
+                        <div class="parchment-inner p-4 rounded-xl border-l-4 border-goldLeaf-500">
+                            <span class="text-xs font-bold uppercase tracking-wider text-goldLeaf-600">Act I</span>
+                            <h3 class="font-display font-bold text-indigoRoyal-950 text-sm mt-0.5">The Parallel Matchmaker</h3>
+                            <p class="text-xs text-parchment-800 mt-1">Bridge 6 milestones of the Exodus with Revolutionary events and unlock Chavruta insights.</p>
+                        </div>
+                        <div class="parchment-inner p-4 rounded-xl border-l-4 border-crimsonSeal-600">
+                            <span class="text-xs font-bold uppercase tracking-wider text-crimsonSeal-600">Act II</span>
+                            <h3 class="font-display font-bold text-indigoRoyal-950 text-sm mt-0.5">Elders & Delegates</h3>
+                            <p class="text-xs text-parchment-800 mt-1">Navigate shared moral dilemmas from the Sinai wilderness to Valley Forge.</p>
+                        </div>
+                        <div class="parchment-inner p-4 rounded-xl border-l-4 border-indigoRoyal-800">
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigoRoyal-800">Act III</span>
+                            <h3 class="font-display font-bold text-indigoRoyal-950 text-sm mt-0.5">The 1776 Great Seal</h3>
+                            <p class="text-xs text-parchment-800 mt-1">Assemble Franklin & Jefferson's Exodus Great Seal and complete the synthesis trial.</p>
+                        </div>
+                    </div>
+
+                    <button onclick="startGame()" class="btn-wax text-white font-display font-bold text-base sm:text-lg px-8 py-4 rounded-2xl tracking-wider uppercase cursor-pointer inline-flex items-center gap-3">
+                        <span>Begin the Journey</span>
+                        <span>→</span>
+                    </button>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // ACT I: THE PARALLEL MATCHMAKER
+        // ==========================================
+        function selectAct1Card(side, id) {
+            if (gameState.matchedIds.includes(id)) return;
+            sfx.click();
+
+            if (side === 'exodus') {
+                gameState.selectedExodus = (gameState.selectedExodus === id) ? null : id;
+            } else {
+                gameState.selectedRev = (gameState.selectedRev === id) ? null : id;
+            }
+
+            // Check match if both selected
+            if (gameState.selectedExodus && gameState.selectedRev) {
+                if (gameState.selectedExodus === gameState.selectedRev) {
+                    const pair = PARALLEL_PAIRS.find(p => p.id === id);
+                    gameState.matchedIds.push(id);
+                    gameState.activeInsight = pair;
+                    gameState.selectedExodus = null;
+                    gameState.selectedRev = null;
+                    sfx.match();
+                    updateMeters(15, 15);
+                    showToast(`Matched! Concept Unlocked: ${pair.hebrewTerm}`, '📜');
+                } else {
+                    sfx.error();
+                    showToast('Not quite a match—look closely at the underlying spiritual theme!', '🤔');
+                    setTimeout(() => {
+                        gameState.selectedExodus = null;
+                        gameState.selectedRev = null;
+                        render();
+                    }, 450);
+                }
+            }
+            render();
+        }
+
+        function proceedToAct2() {
+            sfx.libertyBell();
+            gameState.screen = 'act2';
+            render();
+        }
+
+        function renderAct1() {
+            const allMatched = gameState.matchedIds.length === PARALLEL_PAIRS.length;
+
+            return `
+                <div class="parchment-card rounded-3xl p-5 sm:p-8 gold-border-double animate-enter">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-5 border-b border-parchment-300">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-crimsonSeal-700">Act I • Historical & Conceptual Bridge</span>
+                            <h2 class="font-display text-2xl sm:text-3xl font-bold text-indigoRoyal-950">The Parallel Matchmaker</h2>
+                        </div>
+                        <div class="bg-indigoRoyal-950 text-goldLeaf-400 px-4 py-1.5 rounded-xl text-xs font-bold self-start sm:self-center">
+                            Pairs Linked: ${gameState.matchedIds.length} / ${PARALLEL_PAIRS.length}
+                        </div>
+                    </div>
+
+                    <p class="font-serif text-sm sm:text-base text-parchment-800 mb-6">
+                        Tap a milestone from <strong>Yetziat Mitzrayim</strong> on the left and pair it with its parallel in the <strong>American Revolution</strong> on the right to unlock a <em>Chavruta Insight</em>.
+                    </p>
+
+                    <!-- Active Chavruta Insight Banner -->
+                    ${gameState.activeInsight ? `
+                        <div class="mb-6 p-5 rounded-2xl bg-indigoRoyal-950 text-parchment-50 border-2 border-goldLeaf-500 shadow-xl animate-enter">
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="px-3 py-0.5 rounded-full bg-goldLeaf-500/20 border border-goldLeaf-400 text-goldLeaf-400 text-xs font-bold">
+                                    ✡️ Chavruta Insight: ${gameState.activeInsight.hebrewTerm}
+                                </span>
+                                <span class="text-xs text-emerald-400 font-semibold">+15 Chochmah • +15 Cheirut</span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold text-white mb-1">${gameState.activeInsight.conceptTitle}</h3>
+                            <p class="font-serif text-sm text-parchment-200 leading-relaxed">${gameState.activeInsight.insight}</p>
+                        </div>
+                    ` : ''}
+
+                    <!-- Matching Columns -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                        <!-- Left Column: Yetziat Mitzrayim -->
+                        <div class="space-y-3">
+                            <h3 class="font-display text-sm font-bold uppercase tracking-wider text-indigoRoyal-900 flex items-center gap-2 px-1">
+                                <span>🔥</span> Yetziat Mitzrayim (The Exodus)
+                            </h3>
+                            ${gameState.shuffledExodus.map(item => {
+                                const isMatched = gameState.matchedIds.includes(item.id);
+                                const isSelected = gameState.selectedExodus === item.id;
+                                return `
+                                    <button 
+                                        onclick="selectAct1Card('exodus', '${item.id}')"
+                                        ${isMatched ? 'disabled' : ''}
+                                        class="w-full text-left p-3.5 sm:p-4 rounded-xl border-2 transition cursor-pointer flex items-start gap-3
+                                        ${isMatched 
+                                            ? 'bg-emerald-50/90 border-emerald-500/70 opacity-75 cursor-default' 
+                                            : isSelected 
+                                                ? 'selected-card border-goldLeaf-500 shadow-md' 
+                                                : 'parchment-inner hover:border-goldLeaf-500 hover:shadow'}">
+                                        <span class="text-2xl shrink-0 mt-0.5">${isMatched ? '✅' : item.exodusIcon}</span>
+                                        <div>
+                                            <div class="font-display font-bold text-sm text-indigoRoyal-950">${item.exodusTitle}</div>
+                                            <div class="font-serif text-xs text-parchment-800 mt-0.5">${item.exodusSub}</div>
+                                        </div>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        <!-- Right Column: American Revolution -->
+                        <div class="space-y-3">
+                            <h3 class="font-display text-sm font-bold uppercase tracking-wider text-crimsonSeal-700 flex items-center gap-2 px-1">
+                                <span>🔔</span> The American Revolution
+                            </h3>
+                            ${gameState.shuffledRev.map(item => {
+                                const isMatched = gameState.matchedIds.includes(item.id);
+                                const isSelected = gameState.selectedRev === item.id;
+                                return `
+                                    <button 
+                                        onclick="selectAct1Card('rev', '${item.id}')"
+                                        ${isMatched ? 'disabled' : ''}
+                                        class="w-full text-left p-3.5 sm:p-4 rounded-xl border-2 transition cursor-pointer flex items-start gap-3
+                                        ${isMatched 
+                                            ? 'bg-emerald-50/90 border-emerald-500/70 opacity-75 cursor-default' 
+                                            : isSelected 
+                                                ? 'selected-card border-goldLeaf-500 shadow-md' 
+                                                : 'parchment-inner hover:border-crimsonSeal-600 hover:shadow'}">
+                                        <span class="text-2xl shrink-0 mt-0.5">${isMatched ? '✅' : item.revIcon}</span>
+                                        <div>
+                                            <div class="font-display font-bold text-sm text-indigoRoyal-950">${item.revTitle}</div>
+                                            <div class="font-serif text-xs text-parchment-800 mt-0.5">${item.revSub}</div>
+                                        </div>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Continue Footer -->
+                    ${allMatched ? `
+                        <div class="mt-8 pt-6 border-t border-parchment-300 flex flex-col sm:flex-row items-center justify-between gap-4 animate-enter">
+                            <div class="text-sm font-serif text-indigoRoyal-950">
+                                <strong>All 6 Parallels Unlocked!</strong> You are ready to enter the Council of Elders & Founders.
+                            </div>
+                            <button onclick="proceedToAct2()" class="btn-wax text-white font-display font-bold px-6 py-3 rounded-xl cursor-pointer shrink-0">
+                                Enter Act II: Council Dilemmas →
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // ACT II: ELDERS & DELEGATES SCENARIOS
+        // ==========================================
+        function chooseScenarioOption(idx) {
+            if (gameState.scenarioChoiceMade !== null) return;
+            const scenario = SCENARIOS[gameState.scenarioIndex];
+            const choice = scenario.options[idx];
+            gameState.scenarioChoiceMade = idx;
+            updateMeters(choice.chochmah, choice.cheirut);
+            if (choice.cheirut >= 20) {
+                sfx.match();
+            } else {
+                sfx.click();
+            }
+            render();
+        }
+
+        function nextScenario() {
+            sfx.click();
+            if (gameState.scenarioIndex + 1 < SCENARIOS.length) {
+                gameState.scenarioIndex++;
+                gameState.scenarioChoiceMade = null;
+            } else {
+                sfx.libertyBell();
+                gameState.screen = 'act3';
+            }
+            render();
+        }
+
+        function renderAct2() {
+            const sc = SCENARIOS[gameState.scenarioIndex];
+            const chosen = gameState.scenarioChoiceMade !== null ? sc.options[gameState.scenarioChoiceMade] : null;
+
+            return `
+                <div class="parchment-card rounded-3xl p-5 sm:p-8 gold-border-double animate-enter">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-5 border-b border-parchment-300">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-crimsonSeal-700">${sc.eraBadge}</span>
+                            <h2 class="font-display text-2xl sm:text-3xl font-bold text-indigoRoyal-950">${sc.title}</h2>
+                        </div>
+                        <div class="bg-indigoRoyal-950 text-goldLeaf-400 px-4 py-1.5 rounded-xl text-xs font-bold self-start sm:self-center">
+                            Dilemma ${gameState.scenarioIndex + 1} of ${SCENARIOS.length}
+                        </div>
+                    </div>
+
+                    <!-- Dual Historical Context Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="parchment-inner p-4 rounded-2xl border-t-4 border-goldLeaf-500">
+                            <div class="text-xs font-display font-bold text-goldLeaf-600 uppercase mb-1">📜 At Sinai & The Wilderness</div>
+                            <p class="font-serif text-sm text-parchment-900 leading-relaxed">${sc.exodusParallel}</p>
+                        </div>
+                        <div class="parchment-inner p-4 rounded-2xl border-t-4 border-crimsonSeal-600">
+                            <div class="text-xs font-display font-bold text-crimsonSeal-700 uppercase mb-1">🦅 In the American Revolution</div>
+                            <p class="font-serif text-sm text-parchment-900 leading-relaxed">${sc.revParallel}</p>
+                        </div>
+                    </div>
+
+                    <!-- Dilemma Prompt -->
+                    <div class="bg-indigoRoyal-950 text-parchment-50 p-5 rounded-2xl mb-6 border border-goldLeaf-500/40">
+                        <p class="font-display text-base sm:text-lg font-semibold text-goldLeaf-400 leading-snug">
+                            ${sc.question}
+                        </p>
+                    </div>
+
+                    <!-- Options -->
+                    <div class="space-y-3">
+                        ${sc.options.map((opt, idx) => {
+                            const isSelected = gameState.scenarioChoiceMade === idx;
+                            const isDisabled = gameState.scenarioChoiceMade !== null;
+                            return `
+                                <button 
+                                    onclick="chooseScenarioOption(${idx})"
+                                    ${isDisabled ? 'disabled' : ''}
+                                    class="w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition cursor-pointer
+                                    ${isSelected 
+                                        ? 'bg-amber-50 border-goldLeaf-500 shadow-lg' 
+                                        : isDisabled 
+                                            ? 'parchment-inner opacity-60 cursor-default' 
+                                            : 'parchment-inner hover:border-indigoRoyal-800 hover:shadow-md'}">
+                                    <div class="flex items-start gap-3">
+                                        <span class="w-7 h-7 rounded-full bg-indigoRoyal-900 text-goldLeaf-400 font-display font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                                            ${String.fromCharCode(65 + idx)}
+                                        </span>
+                                        <p class="font-serif text-sm sm:text-base text-parchment-900 font-medium">${opt.text}</p>
+                                    </div>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <!-- Feedback Panel -->
+                    ${chosen ? `
+                        <div class="mt-6 p-5 rounded-2xl bg-indigoRoyal-900 text-parchment-50 border-2 border-goldLeaf-400 animate-enter">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <span class="px-3 py-1 rounded-full bg-goldLeaf-500 text-indigoRoyal-950 text-xs font-extrabold uppercase">
+                                    Path Chosen: ${chosen.badge}
+                                </span>
+                                <span class="text-xs font-bold text-emerald-300">
+                                    +${chosen.chochmah} Chochmah • +${chosen.cheirut} Cheirut
+                                </span>
+                            </div>
+                            <p class="font-serif text-sm sm:text-base text-parchment-100 leading-relaxed mb-4">
+                                ${chosen.feedback}
+                            </p>
+                            <div class="flex justify-end">
+                                <button onclick="nextScenario()" class="btn-wax text-white font-display font-bold px-6 py-2.5 rounded-xl cursor-pointer text-sm">
+                                    ${gameState.scenarioIndex + 1 < SCENARIOS.length ? 'Next Dilemma →' : 'Proceed to Act III: The 1776 Great Seal →'}
+                                </button>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // ACT III: GREAT SEAL BUILDER & SYNTHESIS TRIAL
+        // ==========================================
+        function toggleSealElement(key) {
+            sfx.match();
+            gameState.sealElements[key] = true;
+            updateMeters(10, 10);
+            render();
+        }
+
+        function answerSealQuiz(choiceIdx) {
+            if (gameState.quizAnswered !== null) return;
+            const q = SEAL_QUIZ[gameState.quizIndex];
+            gameState.quizAnswered = choiceIdx;
+            if (choiceIdx === q.correct) {
+                sfx.match();
+                updateMeters(20, 20);
+            } else {
+                sfx.error();
+                updateMeters(5, 5);
+            }
+            render();
+        }
+
+        function nextSealQuiz() {
+            sfx.click();
+            if (gameState.quizIndex + 1 < SEAL_QUIZ.length) {
+                gameState.quizIndex++;
+                gameState.quizAnswered = null;
+            } else {
+                sfx.libertyBell();
+                gameState.screen = 'victory';
+            }
+            render();
+        }
+
+        function renderAct3() {
+            const sealComplete = gameState.sealElements.moses && gameState.sealElements.pillar && gameState.sealElements.motto;
+            const q = SEAL_QUIZ[gameState.quizIndex];
+
+            return `
+                <div class="parchment-card rounded-3xl p-5 sm:p-8 gold-border-double animate-enter">
+                    <div class="pb-4 mb-6 border-b border-parchment-300">
+                        <span class="text-xs font-bold uppercase tracking-widest text-crimsonSeal-700">Act III • Capstone Synthesis</span>
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-indigoRoyal-950">The 1776 Exodus Great Seal & Liberty Bell</h2>
+                    </div>
+
+                    <!-- Step 1: Interactive Great Seal Forging -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center mb-8">
+                        <!-- Visual SVG Seal Preview -->
+                        <div class="lg:col-span-5 flex flex-col items-center justify-center p-5 rounded-2xl bg-indigoRoyal-950 border-2 border-goldLeaf-500 shadow-inner">
+                            <svg class="w-52 h-52 sm:w-60 sm:h-60" viewBox="0 0 240 240">
+                                <!-- Outer Gold Ring -->
+                                <circle cx="120" cy="120" r="112" fill="#131c36" stroke="#eab308" stroke-width="4"/>
+                                <circle cx="120" cy="120" r="92" fill="#1e2b4d" stroke="#ca8a04" stroke-width="1.5" stroke-dasharray="4 3"/>
+                                
+                                <!-- Parted Sea Waves -->
+                                <path d="M35 155 Q75 130 95 165 L35 175 Z" fill="#0284c7" opacity="0.85"/>
+                                <path d="M205 155 Q165 130 145 165 L205 175 Z" fill="#0284c7" opacity="0.85"/>
+
+                                <!-- Pillar of Fire (Conditional) -->
+                                ${gameState.sealElements.pillar ? `
+                                    <g class="animate-enter">
+                                        <path d="M120 35 C105 65, 135 85, 120 115 C110 95, 130 70, 120 35 Z" fill="#f59e0b"/>
+                                        <circle cx="120" cy="52" r="14" fill="#fef08a" opacity="0.5"/>
+                                    </g>
+                                ` : `
+                                    <text x="120" y="65" text-anchor="middle" fill="#64748b" font-size="10" font-family="sans-serif">[Add Pillar of Fire]</text>
+                                `}
+
+                                <!-- Moses with Staff (Conditional) -->
+                                ${gameState.sealElements.moses ? `
+                                    <g class="animate-enter">
+                                        <circle cx="120" cy="126" r="8" fill="#fde68a"/>
+                                        <path d="M108 168 L113 136 L127 136 L132 168 Z" fill="#9b2226"/>
+                                        <line x1="136" y1="112" x2="136" y2="170" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
+                                    </g>
+                                ` : `
+                                    <text x="120" y="145" text-anchor="middle" fill="#64748b" font-size="10" font-family="sans-serif">[Place Moses at Sea]</text>
+                                `}
+
+                                <!-- Motto Banner (Conditional) -->
+                                ${gameState.sealElements.motto ? `
+                                    <g class="animate-enter">
+                                        <text x="120" y="194" text-anchor="middle" fill="#eab308" font-size="7.5" font-weight="bold" font-family="serif">
+                                            REBELLION TO TYRANTS
+                                        </text>
+                                        <text x="120" y="204" text-anchor="middle" fill="#fde047" font-size="7.5" font-weight="bold" font-family="serif">
+                                            IS OBEDIENCE TO GOD
+                                        </text>
+                                    </g>
+                                ` : `
+                                    <text x="120" y="198" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">[Inscribe 1776 Motto]</text>
+                                `}
+                            </svg>
+                            <span class="text-[11px] text-goldLeaf-400 font-display mt-2 tracking-wider uppercase">
+                                Franklin & Jefferson Great Seal (1776)
+                            </span>
+                        </div>
+
+                        <!-- Seal Assembly Controls -->
+                        <div class="lg:col-span-7 space-y-3">
+                            <h3 class="font-display text-lg font-bold text-indigoRoyal-950">
+                                1. Assemble the Proposed Great Seal
+                            </h3>
+                            <p class="font-serif text-sm text-parchment-800 mb-3">
+                                Activate all three symbolic elements proposed by Benjamin Franklin and Thomas Jefferson in August 1776:
+                            </p>
+
+                            <button onclick="toggleSealElement('pillar')" ${gameState.sealElements.pillar ? 'disabled' : ''} 
+                                class="w-full p-3.5 rounded-xl border-2 text-left flex items-center justify-between transition cursor-pointer
+                                ${gameState.sealElements.pillar ? 'bg-emerald-50 border-emerald-500' : 'parchment-inner hover:border-goldLeaf-500'}">
+                                <div>
+                                    <div class="font-display font-bold text-sm text-indigoRoyal-950">🔥 Pillar of Fire (Amud HaEsh)</div>
+                                    <div class="font-serif text-xs text-parchment-800">Symbolizing Divine Providence guiding the nation through darkness</div>
+                                </div>
+                                <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${gameState.sealElements.pillar ? 'bg-emerald-600 text-white' : 'bg-goldLeaf-500 text-indigoRoyal-950'}">
+                                    ${gameState.sealElements.pillar ? 'Engraved ✓' : '+ Engrave'}
+                                </span>
+                            </button>
+
+                            <button onclick="toggleSealElement('moses')" ${gameState.sealElements.moses ? 'disabled' : ''} 
+                                class="w-full p-3.5 rounded-xl border-2 text-left flex items-center justify-between transition cursor-pointer
+                                ${gameState.sealElements.moses ? 'bg-emerald-50 border-emerald-500' : 'parchment-inner hover:border-goldLeaf-500'}">
+                                <div>
+                                    <div class="font-display font-bold text-sm text-indigoRoyal-950">🪄 Moshe Rabbeinu Extending His Staff</div>
+                                    <div class="font-serif text-xs text-parchment-800">Standing at the shore as the sea parts and tyranny is defeated</div>
+                                </div>
+                                <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${gameState.sealElements.moses ? 'bg-emerald-600 text-white' : 'bg-goldLeaf-500 text-indigoRoyal-950'}">
+                                    ${gameState.sealElements.moses ? 'Engraved ✓' : '+ Engrave'}
+                                </span>
+                            </button>
+
+                            <button onclick="toggleSealElement('motto')" ${gameState.sealElements.motto ? 'disabled' : ''} 
+                                class="w-full p-3.5 rounded-xl border-2 text-left flex items-center justify-between transition cursor-pointer
+                                ${gameState.sealElements.motto ? 'bg-emerald-50 border-emerald-500' : 'parchment-inner hover:border-goldLeaf-500'}">
+                                <div>
+                                    <div class="font-display font-bold text-sm text-indigoRoyal-950">📜 "Rebellion to Tyrants is Obedience to God"</div>
+                                    <div class="font-serif text-xs text-parchment-800">The motto championing Divine justice over human despotism</div>
+                                </div>
+                                <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${gameState.sealElements.motto ? 'bg-emerald-600 text-white' : 'bg-goldLeaf-500 text-indigoRoyal-950'}">
+                                    ${gameState.sealElements.motto ? 'Engraved ✓' : '+ Engrave'}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Synthesis Trial (Unlocks once seal is forged) -->
+                    ${sealComplete ? `
+                        <div class="pt-6 border-t-2 border-goldLeaf-500/40 animate-enter">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-display text-lg font-bold text-indigoRoyal-950">
+                                    2. Torah & Founding Synthesis Trial (${gameState.quizIndex + 1} / ${SEAL_QUIZ.length})
+                                </h3>
+                                <span class="text-xs font-bold text-crimsonSeal-700 uppercase">Ring the Liberty Bell</span>
+                            </div>
+
+                            <div class="bg-indigoRoyal-950 text-parchment-50 p-5 rounded-2xl mb-4">
+                                <p class="font-serif text-base sm:text-lg text-goldLeaf-300 font-semibold">${q.prompt}</p>
+                            </div>
+
+                            <div class="space-y-2.5">
+                                ${q.choices.map((c, i) => {
+                                    const isAnswered = gameState.quizAnswered !== null;
+                                    const isCorrect = i === q.correct;
+                                    const isChosen = i === gameState.quizAnswered;
+                                    let styleClass = 'parchment-inner hover:border-goldLeaf-500';
+                                    if (isAnswered) {
+                                        if (isCorrect) styleClass = 'bg-emerald-50 border-emerald-600 font-semibold';
+                                        else if (isChosen) styleClass = 'bg-red-50 border-red-500';
+                                        else styleClass = 'parchment-inner opacity-60';
+                                    }
+                                    return `
+                                        <button onclick="answerSealQuiz(${i})" ${isAnswered ? 'disabled' : ''}
+                                            class="w-full text-left p-4 rounded-xl border-2 transition cursor-pointer font-serif text-sm sm:text-base ${styleClass}">
+                                            ${c}
+                                        </button>
+                                    `;
+                                }).join('')}
+                            </div>
+
+                            ${gameState.quizAnswered !== null ? `
+                                <div class="mt-4 p-4 rounded-xl bg-amber-50 border border-amber-400 text-parchment-900 font-serif text-sm animate-enter flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                    <p><strong>Insight:</strong> ${q.explanation}</p>
+                                    <button onclick="nextSealQuiz()" class="btn-wax text-white font-display font-bold px-5 py-2.5 rounded-xl cursor-pointer shrink-0 text-xs sm:text-sm">
+                                        ${gameState.quizIndex + 1 < SEAL_QUIZ.length ? 'Next Question →' : 'Complete & Claim Scroll 🏆'}
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : `
+                        <div class="p-4 rounded-xl bg-amber-50/80 border border-amber-300 text-center font-serif text-sm text-parchment-800">
+                            Complete all 3 engravings on the 1776 Great Seal above to unlock the final Synthesis Trial.
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // VICTORY SCROLL SCREEN
+        // ==========================================
+        function renderVictory() {
+            const totalScore = gameState.chochmah + gameState.cheirut;
+            const rankTitle = totalScore >= 210 
+                ? "Master of Covenantal History" 
+                : totalScore >= 160 
+                    ? "Keeper of Sinai & Liberty" 
+                    : "Student of Freedom's Heritage";
+
+            return `
+                <div class="parchment-card rounded-3xl p-6 sm:p-10 gold-border-double animate-enter text-center">
+                    <div class="text-5xl mb-3">🔔📜✡️</div>
+                    <span class="px-4 py-1 rounded-full bg-indigoRoyal-950 text-goldLeaf-400 text-xs font-display font-bold uppercase tracking-widest">
+                        Proclamation Complete
+                    </span>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-indigoRoyal-950 mt-3 mb-2">
+                        ${rankTitle}
+                    </h2>
+                    <p class="font-serif italic text-base sm:text-lg text-crimsonSeal-700 max-w-2xl mx-auto mb-6">
+                        "U'kratem Dror Ba'aretz L'chol Yoshveha" — Leviticus 25:10
+                    </p>
+
+                    <!-- Final Score Tally -->
+                    <div class="grid grid-cols-3 gap-3 sm:gap-5 max-w-xl mx-auto mb-8">
+                        <div class="parchment-inner p-4 rounded-2xl">
+                            <div class="text-xs uppercase font-bold text-goldLeaf-600">Chochmah</div>
+                            <div class="font-display text-2xl sm:text-3xl font-extrabold text-indigoRoyal-950 mt-1">${gameState.chochmah}</div>
+                        </div>
+                        <div class="parchment-inner p-4 rounded-2xl">
+                            <div class="text-xs uppercase font-bold text-crimsonSeal-700">Cheirut</div>
+                            <div class="font-display text-2xl sm:text-3xl font-extrabold text-indigoRoyal-950 mt-1">${gameState.cheirut}</div>
+                        </div>
+                        <div class="bg-indigoRoyal-950 text-goldLeaf-400 p-4 rounded-2xl border border-goldLeaf-500">
+                            <div class="text-xs uppercase font-bold text-parchment-300">Total Honor</div>
+                            <div class="font-display text-2xl sm:text-3xl font-extrabold mt-1">${totalScore}</div>
+                        </div>
+                    </div>
+
+                    <!-- Summary of Core Takeaways -->
+                    <div class="parchment-inner rounded-2xl p-5 sm:p-6 text-left max-w-3xl mx-auto mb-8 space-y-3 font-serif text-sm text-parchment-900">
+                        <h3 class="font-display font-bold text-base text-indigoRoyal-950 border-b border-parchment-300 pb-2">
+                            Pillars of Covenantal Liberty You Mastered:
+                        </h3>
+                        <ul class="space-y-2 list-disc pl-5">
+                            <li><strong>Tzelem Elokim:</strong> Because every person is created in God's image, no earthly king holds absolute ownership over human beings.</li>
+                            <li><strong>Nachshon's Leap & Providence:</strong> Redemption begins when human courage steps forward into uncharted waters, trusting in Divine Providence.</li>
+                            <li><strong>Cheirut al HaLuchot (Liberty Under Law):</strong> True freedom is not anarchy; just as Sinai gave structure to the Exodus, the Declaration and Constitution bound liberty to moral law.</li>
+                            <li><strong>Dror (Leviticus 25:10):</strong> The Liberty Bell's inscription connects the Biblical Jubilee directly to the enduring promise of universal liberty.</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <button onclick="toggleCodex()" class="btn-gold text-white font-display font-bold px-6 py-3.5 rounded-xl cursor-pointer">
+                            📖 Review Chavruta Codex
+                        </button>
+                        <button onclick="startGame()" class="btn-wax text-white font-display font-bold px-7 py-3.5 rounded-xl cursor-pointer">
+                            ↻ Play Again
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // 6. MAIN RENDER LOOP
+        // ==========================================
+        function render() {
+            const stage = document.getElementById('game-stage');
+            updateProgressUI();
+
+            if (gameState.screen === 'intro') {
+                stage.innerHTML = renderIntro();
+            } else if (gameState.screen === 'act1') {
+                stage.innerHTML = renderAct1();
+            } else if (gameState.screen === 'act2') {
+                stage.innerHTML = renderAct2();
+            } else if (gameState.screen === 'act3') {
+                stage.innerHTML = renderAct3();
+            } else if (gameState.screen === 'victory') {
+                stage.innerHTML = renderVictory();
+            }
+        }
+
+        // Initialize on Window Load
+        window.onload = function () {
+            populateCodex();
+            render();
+        };
+    </script>
+</body>
+</html>
